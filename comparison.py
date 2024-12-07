@@ -12,18 +12,21 @@ def compare_summaries(original_text, summaries):
         summaries (list): A list of summaries generated.
 
     Returns:
-        dict: A dictionary containing 'tfidf_similarities' and 'bm25_scores'.
+        dict: A dictionary containing TF-IDF cosine similarities, BM25 score, and a combined score of their mean.
     """
     if not original_text or not summaries:
         raise ValueError("Original text and summaries cannot be empty.")
 
     tfidf_similarities = compute_tfidf(original_text, summaries)
     bm25_scores = compute_bm25(original_text, summaries)
+    combined_scores = (tfidf_similarities + bm25_scores) / 2 #assuming equal weight
+
     
     # Return the results as NumPy arrays
     return {
         "tfidf_similarities": np.array(tfidf_similarities),
-        "bm25_scores": np.array(bm25_scores)
+        "bm25_scores": np.array(bm25_scores),
+        "combined_score" : np.array(combined_scores)
     }
 
 def compute_tfidf(original_text, summaries):
