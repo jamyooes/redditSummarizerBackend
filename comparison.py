@@ -5,14 +5,15 @@ import numpy as np
 
 def compare_summaries(original_text, summaries):
     """
-    Compares a list of summaries against the original text using TF-IDF and BM25.
+    Compares a list of summaries against the original text using TF-IDF and BM25. It then combines these 
+    scores to identify the best summary.
 
     Args:
         original_text (str): The original text.
-        summaries (list): A list of summaries generated.
+        summaries (list): A list of generated summaries to be compared.
 
     Returns:
-        dict: A dictionary containing TF-IDF cosine similarities, BM25 score, and a combined score of their mean.
+        dict: A dictionary containing TF-IDF cosine similarities, BM25 score, and average scores from TF-IDF and BM25.
     """
     if not original_text or not summaries:
         raise ValueError("Original text and summaries cannot be empty.")
@@ -20,6 +21,10 @@ def compare_summaries(original_text, summaries):
     tfidf_similarities = compute_tfidf(original_text, summaries)
     bm25_scores = compute_bm25(original_text, summaries)
     combined_scores = (tfidf_similarities + bm25_scores) / 2 #assuming equal weight
+
+    highest_score_index = np.argmax(combined_scores)
+    best_summary = summaries[highest_score_index]
+    print(f"The most relevant summary is:\n{best_summary}")
 
     
     # Return the results as NumPy arrays
