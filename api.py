@@ -16,17 +16,15 @@ def post_data():
     url = incoming_data['url']
     scraped_text = scraper.scrape_reddit(url)
     summarized_text_list = summarizer.summarizer_pipeline(scraped_text)
-    summary_comparison = comparison.compare_summaries(scraped_text, summarized_text_list)
-    print(summary_comparison)
+    best_summary = comparison.compare_summaries(scraped_text, summarized_text_list)
+
     print("summary")
     print("-" * 40)
     for i in summarized_text_list:
         print (i)
         print("-" * 40)
-    # print("Recieved URL: ", incoming_data)
     
-    # Update the summaries or whatever we're sending in the response
-    response = {"message": "URL recieved successfully", "recieved_data" : incoming_data}
+    response = {"message": "URL recieved successfully", "summary" : best_summary}
     return jsonify(response), 200
 
 if __name__ == '__main__':

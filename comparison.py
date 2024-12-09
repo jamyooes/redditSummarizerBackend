@@ -20,19 +20,22 @@ def compare_summaries(original_text, summaries):
 
     tfidf_similarities = compute_tfidf(original_text, summaries)
     bm25_scores = compute_bm25(original_text, summaries)
-    combined_scores = (tfidf_similarities + bm25_scores) / 2 #assuming equal weight
+
+    bm25_scores_normalized = [score / max(bm25_scores) for score in bm25_scores]
+
+    combined_scores = (tfidf_similarities + bm25_scores_normalized) / 2 #assuming equal weight
 
     highest_score_index = np.argmax(combined_scores)
     best_summary = summaries[highest_score_index]
     print(f"The most relevant summary is:\n{best_summary}")
 
-    
-    # Return the results as NumPy arrays
-    return {
+    scores = {
         "tfidf_similarities": np.array(tfidf_similarities),
         "bm25_scores": np.array(bm25_scores),
         "combined_score" : np.array(combined_scores)
     }
+    print(scores)
+    return best_summary
 
 def compute_tfidf(original_text, summaries):
     vectorizer = TfidfVectorizer()
