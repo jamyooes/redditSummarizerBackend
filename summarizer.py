@@ -74,7 +74,12 @@ def summarizer(text):
         # print(f"Summary using {name}:")
         output = ""
         summarizer.stop_words = get_stop_words("english") # work with stop words
-        summary = summarizer(parser.document, 4) # summarize the comment in 4 sentences
+        # LexRank tends to generate shorter summaries, so have it use a larger number of sentences.
+        if name == "LexRank":
+            num_sentences = 4
+        else:
+            num_sentences = 1
+        summary = summarizer(parser.document, num_sentences) # summarize the comment in 4 sentences
         for sentence in summary:
             # print(sentence)
             output += str(sentence) # Loop through the sentences if present
