@@ -27,7 +27,7 @@ pip install virtualenv
 
 Create virtual environment
 ```bash
-python -m venv /env
+python -m venv env
 ```
 
 Activate virtual Environment
