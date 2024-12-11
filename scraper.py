@@ -43,7 +43,7 @@ def scrape_reddit(url):
         concatenated += comment.body + " "
     concatenated = re.sub('\s+', ' ', concatenated)
     html = markdown(concatenated)
-    text = ''.join(BeautifulSoup(html).findAll(text=True))
+    text = ''.join(BeautifulSoup(html, features="lxml").findAll(text=True))
     text = re.sub(r'http\S+', '', text)
     text = remove_emojis(text)
     text = text[:-1]
