@@ -51,12 +51,15 @@ Assumptions:
 User has set up the extension and activated the backend code 
 
 The user will be on a reddit page comment thread and click on summarize thread.
+
 ![image](https://github.com/user-attachments/assets/1556dabf-5ec4-497a-a744-1d931ea5bbbd)
 
 If the page is not a reddit page comment thread it will return the following error
+
 ![image](https://github.com/user-attachments/assets/82ae4ae3-971a-480b-9ca4-88c92bd616a3)
 
 If the backend code is not active then it will return the following error
+
 ![image](https://github.com/user-attachments/assets/60fff8fe-b052-4579-b2c7-40e3ad773ce5)
 
 With the backend code running (api.py) active The frontend will send a post request to the API.
