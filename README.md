@@ -35,3 +35,6 @@ Run the backend code
 ```bash
 python api.py
 ```
+
+Ensure that the extension has been set up
+https://github.com/jamyooes/redditsummarizer/tree/main
