@@ -63,4 +63,12 @@ If the backend code is not active then it will return the following error
 ![image](https://github.com/user-attachments/assets/60fff8fe-b052-4579-b2c7-40e3ad773ce5)
 
 With the backend code running (api.py) active, the frontend will send a post request to the API.
-api.py will recieve the post request and process the reddit thread by scraping the text, then summarize the text, then compare the text for the best summary and return the best summary back to the extension.
+
+api.py will recieve the post request and process the reddit thread: 
+1. Scraping the text
+2. Summarize the text
+3. Compare the text for the best summary
+4. Return as a payload to the fronend the best summary back to the extension.
+
+The returned summary will be displayed in the extension.
+
