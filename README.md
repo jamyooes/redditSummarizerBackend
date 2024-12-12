@@ -10,6 +10,10 @@ We will use a few different text summarization methods potentially including Luh
 We can evaluate our approach via annotation. We will have a set of annotation guidelines for what determines a “good” summary. Then we can have humans write some summaries and mix this into a pool of machine generated summaries. Then a different set of humans will annotate (score) the summaries without knowing which ones are human/machine written. If the machine summaries are comparable to the human summaries score-wise, then we’ve both evaluated and demonstrated the effectiveness of our approach.
 
 ## User Guide
+
+Ensure that the extension has been set up following instructions from this repo
+https://github.com/jamyooes/redditsummarizer/tree/main
+
 Clone the repo
 ```bash
 git clone https://github.com/jamyooes/redditSummarizerBackend.git
@@ -43,32 +47,54 @@ Run the backend code
 python api.py
 ```
 
-Ensure that the extension has been set up following instructions from this repo
-https://github.com/jamyooes/redditsummarizer/tree/main
+If there is any confusions follow the demo-video guide from the text data submission
+
+## Sample outputs
+The front end will be a simple extension
+
+![image](https://github.com/user-attachments/assets/d1474825-473f-416c-9f8f-217948ed582d)
+
+Clicking the button on a non-reddit comment thread will return an error:
+
+![image](https://github.com/user-attachments/assets/71cbf33d-c9cf-4dd6-9fce-69168e6bb70f)
+
+Clicking the button on a reddit comment thread without the api code running will return:
+
+![image](https://github.com/user-attachments/assets/8286e25d-ae44-4e07-bd25-dbc82c228674)
+
+Clicking the button on a reddit comment thread with the api code running will return a summary:
+
+![image](https://github.com/user-attachments/assets/cbabff1a-8d06-4c58-bd68-88c09e27283d)
+
+If there are any issues with the extension after clicking the summarize, please refresh.
 
 ## High Level Logic
 Assumptions:
-User has set up the extension and activated the backend code 
+The python api.py script is running and the extension has been set up.
 
-The user will be on a reddit page comment thread and click on summarize thread.
+The workflow would go as follows:
+With the backend code running (api.py) active, the user will be on an URL and follow the cases above from the sample outputs.
 
-![image](https://github.com/user-attachments/assets/1556dabf-5ec4-497a-a744-1d931ea5bbbd)
+If the user clicks on the summarize thread button on a reddit comment thread, then the frontend will send a post request to the backend with the current URL as the payload.
 
-If the page is not a reddit page comment thread it will return the following error
+api.py will recieve the post request and process the URL: 
 
-![image](https://github.com/user-attachments/assets/82ae4ae3-971a-480b-9ca4-88c92bd616a3)
+### 1.Scraping the text
+Use the PRAW packaged, which is a python reddit API, for scrapping the user's comments given the URL from the frontend.
+We set up the text for the summarizer with the top submissions to not overload the API limits.
+The comments are processed by removing emojis and then sent to the summarizer module. 
 
-If the backend code is not active then it will return the following error
+### 2.Summarize the text
+The summarizer will clean the text from the scarping module for html tags, emojis, and stopwords.
+The summarizer will use 3 algorithms using the sumy package (LSA, Lex rank, Text rank)
+The LSA and Text rank will return 1 sentence, while the Lex rank will return 4 sentences, as the lex rank generally returns shorter summaries.
+The summarizer will output a summary for each algorithm and save it in a list.
 
-![image](https://github.com/user-attachments/assets/60fff8fe-b052-4579-b2c7-40e3ad773ce5)
+### 3.Compare the text for the best summary
+The comparison module will use TFIDF weighting and BM25 scoring normallized in order to compare the original text with all the summaries.
+The summary with the highest score will have the best summary. 
+The best summary will be sent as output to the payload for the frontend
 
-With the backend code running (api.py) active, the frontend will send a post request to the API.
-
-api.py will recieve the post request and process the reddit thread: 
-1. Scraping the text
-2. Summarize the text
-3. Compare the text for the best summary
-4. Return as a payload to the fronend the best summary back to the extension.
-
+### 4.Return as a payload to the fronend the best summary back to the extension.
 The returned summary will be displayed in the extension.
-
+As shown in the sample outputs.
