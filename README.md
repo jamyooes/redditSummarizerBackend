@@ -98,3 +98,7 @@ The best summary will be sent as output to the payload for the frontend
 ### 4.Return as a payload to the fronend the best summary back to the extension.
 The returned summary will be displayed in the extension.
 As shown in the sample outputs.
+
+# Evaluation
+
+In order to evaluate the effectiveness of our project, we generated summaries for 10 Reddit threads and also manually wrote out 10 summaries and had two separate reviewers review each anonymized summary and score each one from a scale of 1-3 with 1 being the worst and 3 being the best (link to the scoring spreadsheet here: https://docs.google.com/spreadsheets/d/1Ko7uKOdAt4U9tnt5U7KboJmcR_ifIcA3Zs4FG18ii_4/edit?usp=sharing). On average, the machine generated summaries scored a 2.3 and human written summaries scored a 2.45 which are quite comparable scores. Even though human generated summaries scored higher, the amount of time saved by having a machine generate the summaries still makes this tool a potentially valuable asset.
